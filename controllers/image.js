@@ -2,7 +2,7 @@ const Clarifai = require('clarifai');
 
 // remove this before pushing to github
 const app = new Clarifai.App({
- apiKey: 'YOUR_API_KEY_HERE'
+ apiKey: 'd52a9b39b2124a1e94ea714db9746073'
 });
 
 const handleApiCall = (req, res) => {
