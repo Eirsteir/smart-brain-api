@@ -27,7 +27,7 @@ const handleRegister =  (req, res, db, bcrypt) => {
       })
     })
     .then(trx.commit) // if all pass then commit and add it
-    .catch(trx.rollback) // if fail - rollback the changes
+    .catch(err => trx.rollback) // if fail - rollback the changes
   })
   .catch(err => res.status(400).json('Unable to register'))
 }

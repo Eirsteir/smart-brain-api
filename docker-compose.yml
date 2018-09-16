@@ -22,7 +22,10 @@ services:
     command: npm start
     working_dir: /usr/src/smart-brain
     environment:
-      - API_URL=192.168.99.100:3000
+      API_URL: 192.168.99.100:3000
+    volumes:
+      - ./:/usr/src/smart-brain
+
 
   # Postgres
   postgres:
