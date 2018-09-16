@@ -7,6 +7,7 @@ const morgan = require('morgan');
 
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
+const signout = require('./controllers/signout');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
 const auth = require('./controllers/authorization');
@@ -29,6 +30,7 @@ app.use(morgan('combined'));
 app.get('/', (req, res) => { res.status(200).json('all good') })
 app.post('/signin', signin.sigininAuthentification(db, bcrypt))
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
+app.post('/signout', auth.requireAuth, (req, res) => { signout.handleSignout(req, res) })
 app.get('/profile/:id', auth.requireAuth, (req, res) => { profile.handleProfileGet(req, res, db) })
 app.post('/profile/:id', auth.requireAuth, (req, res) => { profile.handleProfileUpdate(req, res, db) })
 app.put('/image', auth.requireAuth, (req, res) => { image.handleImage(req, res, db) })
