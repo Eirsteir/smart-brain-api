@@ -22,14 +22,24 @@ const handleRegister =  (req, res, db, bcrypt) => {
           name: name,
           joined: new Date()
         })
-        .then(user => {
-          res.json(user[0])
+        .then(user => user[0])
+        .catch(err => Promise.reject('Unable to register'))
       })
     })
     .then(trx.commit) // if all pass then commit and add it
     .catch(err => trx.rollback) // if fail - rollback the changes
   })
-  .catch(err => res.status(400).json('Unable to register'))
+  .catch(err => Promise.reject('Unable to register'))
+}
+
+const registerAuthentification = (req, res, db, bcrypt) => {
+  const { authorization } = req.headers;
+  return handleRegister(req, res, db, bcrypt)
+    .then(data => {
+      return data.id && data.email ? createSessions(data) : Promise.reject(data)
+    })
+    .then(session => res.json(session))
+    .catch(err => res.status(400).json(err))
 }
 
 module.exports = {

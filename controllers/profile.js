@@ -2,7 +2,7 @@ const handleProfileGet = (req, res, db) => {
   const { id } = req.params;
   db.select('*').from('users').where({id})
    .then(user => {
-     if (user.lenght) {
+     if (user.length) {
        res.json(user[0])
      } else {
        res.status(400).json('Not found')
@@ -16,8 +16,8 @@ const handleProfileUpdate = (req, res, db) => {
   const { id } = req.params;
   const { name, age, pet } = req.body.formInput;
   db('users')
-    .where({ id})
-    .update({ name })
+    .where({ id })
+    .update({ name, age, pet })
     .then(response => {
       if (response) {
         res.json('Successfully updated profile')
